@@ -1,6 +1,7 @@
 body {
     color: white;
-    background-color: black;
+    background-image: url("../images/bg.png");
+    background-size: cover;
     background-position: center;
     background-attachment: fixed;
     display: flex;
