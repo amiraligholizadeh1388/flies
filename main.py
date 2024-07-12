@@ -1,6 +1,6 @@
 #a->b b->c c-d
 cities = ['a' , 'b' , 'c' , 'd' , 'e' , 'f']
-flies = ['a->b' , 'b->c' , 'c->d']
+flies = ['a->b' , 'b->c' , 'c->d' , 'd->e' , 'e->f']
 def check_fly(mabda , maghsad , city , fly):
     mabdaha = [i[0] for i in flies]
     maghsadha = [i[-1] for i in flies]
@@ -9,24 +9,24 @@ def check_fly(mabda , maghsad , city , fly):
             if f'{mabda}->{maghsad}' in flies:
                 return f'{mabda}->{maghsad}'
             else:
-                b = mabda
+                
                 his = [mabda]
-                while True:
-                    a = maghsadha[mabdaha.index(b)]
-                    his.append(a)
+                a = mabda
+                while a != maghsad:
                     a = maghsadha[mabdaha.index(a)]
-                    his.append(a)
-                    if a != maghsad:
-                        b = a
+                    if a not in his:
+                        his.append(a)
                     else:
-                        continue
-                    ticket = str(his)
-                    ticket.replace('[' and ']' , '')
-                    ticket.replace(',' , '->')
-                    ticket.replace(' ' , '')
-                    return ticket
+                        his = his[0 : his.index(a)+1]
+                ticket = str(his)
+                ticket = ticket.replace('[' , '')
+                ticket = ticket.replace(']' , '')
+                ticket = ticket.replace(',' , '->')
+                ticket = ticket.replace(' ' , '')
+                ticket = ticket.replace("'" , '')
+                return ticket
         elif maghsad not in maghsadha:
             return 'ma hamchin parvazi nadarim'
     elif mabda not in mabdaha:
         return 'ma hamchin parvazi nadarim'
-print(check_fly('a' , 'c' , cities , flies))
+print(check_fly('a' , 'd' , cities , flies))
