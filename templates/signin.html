@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+{%block head%}
+    <title>ایجاد حساب کاربری</title>
+{%endblock%}
+{%block body%}
+    {%if a%}
+        {%if form[4] in username%}
+            <div class="error">
+                <p>این نام کاربری قبلا ثبت شده لطفا نام کاربری دیگری انتخاب کنید</p>
+            </div>
+        {%endif%}
+        {%if form[5] in password%}
+        <div class="error">
+            <p>این رمز عبور قبلا ثبت شده لطفا رمز عبور دیگری انتخاب کنید</p>
+        </div> 
+        {%endif%}
+        {%if form[5] == form[6]%}
+        <div class="error">
+            <p>رمز عبور با تکرار روز عبور تطابق ندارد</p>
+        </div>
+        {%endif%}
+    {%endif%}
+    <h1>ایجاد حساب کاربری</h1>
+    <form action="http://127.0.0.1:5000/account" method="post">
+        <input type="text" id="4" name="fistname" placeholder="نام" required>
+        <br><br>
+        <input type="text" id="5" name="lastname" placeholder="نام خانوادگی" required>
+        <br><br>
+        <input type="text" id="6" name="phonenumber" placeholder="شماره تلفن همراه" required max="11" min="11">
+        <br><br>
+        <input type="text" id="1" name="new-username" placeholder="نام کاربری جدید" required>
+        <br><br>
+        <input type="password" name="password" id="2" placeholder="رمز عبور" required>
+        <br><br>
+        <input type="password" name="password-again" id="3" placeholder="تکرار رمز عبور" required>
+        <br><br>
+        <input type="submit" value="ایجاد" class="b">
+    </form>
+    <a href="http://127.0.0.1:5000/login">حساب کاربری دارید؟ورود</a>
+    <br>
+{%endblock%}

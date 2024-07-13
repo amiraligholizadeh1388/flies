@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+{%block head%}
+    <title>ورود</title>
+{%endblock%}
+{%block body%}
+    {%if a%}
+        {%if form[0] not in username%}
+            <div class="error">
+                <p>نام کاربری نادرست است</p>
+            </div>
+        {%endif%}
+        {%if form[1] not in password%}
+            <div class="error">
+                <p>رمز عبور نا درست است</p>
+            </div>
+        {%endif%}
+        {%if username.index(form[0]) != password.index(form[1])%}
+            <div class="error">
+                <p>این نام کاربری با این رمز عبور تطابق ندارد</p>
+            </div>
+        {%endif%}
+    {%endif%}
+    <h1>ورود</h1>
+    <form action="http://127.0.0.1:5000/account" method="post">
+        <input type="text" id="1" name="username" placeholder="نام کاربری" required>
+        <br><br>
+        <input type="password" name="password" id="2" placeholder="رمز عبور" required>
+        <br><br>
+        <input type="submit" value="ورود" class="b">
+    </form>
+    <a href="http://127.0.0.1:5000/signin">حساب کاربری ندارید؟ایجاد</a>
+    <br>
+{%endblock%}
