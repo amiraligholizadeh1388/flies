@@ -1,6 +1,43 @@
-from flask import Flask , render_template , request
+from flask import Flask , render_template , request , redirect , url_for
 import pandas as pd
+
+data_flies = pd.read_csv('data_flies.csv')
+cites = pd.read_csv("cities.csv")
 data = pd.read_csv('data.csv')
+def check_fly(mabda , maghsad , city , flies):
+    city = [i for i in city]
+    flies = [i for i in flies]
+    mabdaha = [i[0] for i in flies]
+    maghsadha = [i[-1] for i in flies]
+    if mabda and maghsad in city:
+        if mabda in mabdaha:
+            if maghsad in maghsadha:
+                if f'{mabda}->{maghsad}' in flies:
+                    return f'{mabda}->{maghsad}'
+                else:
+                    
+                    his = [mabda]
+                    a = mabda
+                    while a != maghsad:
+                        a = maghsadha[mabdaha.index(a)]
+                        if a not in his:
+                            his.append(a)
+                        else:
+                            his = his[0 : his.index(a)+1]
+                    ticket = str(his)
+                    ticket = ticket.replace('[' , '')
+                    ticket = ticket.replace(']' , '')
+                    ticket = ticket.replace(',' , '->')
+                    ticket = ticket.replace(' ' , '')
+                    ticket = ticket.replace("'" , '')
+                    return ticket
+            elif maghsad not in maghsadha:
+                return 'ما همچین پروازی نداریم' + '1111'
+        elif mabda not in mabdaha:
+            return 'ما همچین پروازی نداریم' + '2222'
+    elif mabda or maghsad not in city:
+        return 'ما همچین پروازی نداریم' + '3333'
+
 app = Flask(__name__)
 @app.route('/')
 def index():
@@ -13,7 +50,7 @@ def signin():
     return render_template('signin.html')
 @app.route("/account" , methods=['GET' , 'POST'])
 def account():
-    global data
+    global data , form
     form = request.form
     form = dict(form)
     form = list(form.values())
@@ -38,37 +75,13 @@ def account():
             return redirect(url_for('signin') ,)
     else:
         return 'error' 
+@app.route('/info' ,methods=['POST' , 'GET'])
+def info():
+    form2 = request.form
+    form2 = dict(form2)
+    form2 = list(form2.values())
+    result = str(check_fly(form2[0], form2[1] , cites['city'] , data_flies['fly']))
+    return render_template('info.html' , result=result)
 if __name__ == '__main__':
     app.run()
-if False:
-    cities = ['a' , 'b' , 'c' , 'd' , 'e' , 'f']
-    flies = ['a->b' , 'b->c' , 'c->d' , 'd->e' , 'e->f']
-    def check_fly(mabda , maghsad , city , fly):
-        mabdaha = [i[0] for i in flies]
-        maghsadha = [i[-1] for i in flies]
-        if mabda in mabdaha:
-            if maghsad in maghsadha:
-                if f'{mabda}->{maghsad}' in flies:
-                    return f'{mabda}->{maghsad}'
-                else:
-                    
-                    his = [mabda]
-                    a = mabda
-                    while a != maghsad:
-                        a = maghsadha[mabdaha.index(a)]
-                        if a not in his:
-                            his.append(a)
-                        else:
-                            his = his[0 : his.index(a)+1]
-                    ticket = str(his)
-                    ticket = ticket.replace('[' , '')
-                    ticket = ticket.replace(']' , '')
-                    ticket = ticket.replace(',' , '->')
-                    ticket = ticket.replace(' ' , '')
-                    ticket = ticket.replace("'" , '')
-                    return ticket
-            elif maghsad not in maghsadha:
-                return 'ma hamchin parvazi nadarim'
-        elif mabda not in mabdaha:
-            return 'ma hamchin parvazi nadarim'
-    check_fly('a' , 'd' , cities , flies)
+

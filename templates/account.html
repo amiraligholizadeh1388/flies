@@ -5,4 +5,14 @@
 {%block body%}
     <h1>سلام {{name}}</h1>
     <p>سلام {{name}} به پنل مدیریت خوش آمدی</p>
+    <h2>اطلاع از قیمت هوایی</h2>
+    <p>{{name}} عزیز شما در این بخش میتوانید از قیمت های هوایی اطلاع داشته باشید</p>
+    <br>
+    <form action="http://127.0.0.1:5000/info" method="post">
+        <input type="text" id="3" name="origin" placeholder="مبدا" required>
+        <br><br>
+        <input type="text" name="goal" id="4" placeholder="مقصد" required>
+        <br><br>
+        <input type="submit" value="گرفتن اطلاعات" class="b">
+    </form>
 {%endblock%}
