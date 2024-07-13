@@ -159,3 +159,25 @@ img.i{
   border-radius: 100%;
   width: 20%;
 }
+img.g{
+  border-radius: 0px;
+}
+input{
+  border-radius: 20px;
+  padding-right: 10px;
+  width: 30%;
+  height: 50px;
+  font-family: lalezar;
+  font-size: 20px;
+}
+input.b{
+  background-color: white;
+  font-family: lalezar;
+  font-size: 20px;
+  text-align: center;
+  width: 20%;
+}
+.error{
+  background-color: rgb(246, 142, 142);
+  color: black;
+}
