@@ -54,7 +54,7 @@ def admin():
         return 'salam admin'
     else:
         return 'error 403 vorod gheyr ghanoni'
-        
+
 @app.route("/account" , methods=['GET' , 'POST'])
 def account():
     global data , form , Bool
@@ -78,7 +78,7 @@ def account():
         if form[3] not in username and form[2] not in phone_number and form[-1]==form[-2] and form[-2] not in password:
             new_data = pd.DataFrame({'first name' : [form[0]] , 'last name' : [form[1]] , 'phone number' : [form[2]] , 'username' : [form[3]] , 'password' :  [form[4]]})
             new_data.to_csv('data.csv' , mode='a' , header=False , index=False)
-            data = pd.read_csv(data.csv)
+            data = pd.read_csv('data.csv')
 
             return render_template('account.html' , name=form[0])
         else:
