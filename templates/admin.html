@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{%block head%}
+    <title>حساب کاربری</title>
+{%endblock%}
+{%block body%}
+    <h1>سلام ادمین بزرگوار</h1>
+    <p>ادمین به پنل مدیریت پرواز ها خوش آمدی</p>
+    <div style="display: flex;">
+        <div style="width: 50%;">
+            <h2>افزودن پرواز جدید</h2>
+            <form action="http://127.0.0.1:5000/info-admin" method="post">
+                <input type="text" id="5" name="fly" placeholder="پرواز جدید(مثلا city1->city2)" required>
+                <br><br>
+                <input type="submit" value="افزودن پرواز" class="b">
+            </form>
+        </div>
+        <div style="width: 50%;">
+            <h2>افزودن شهر جدید</h2>
+            <form action="http://127.0.0.1:5000/info-admin" method="post">
+                <input type="text" id="5" name="fly" placeholder="شهر جدید(لطفا مطابق با نقشه اضافه کنید)" required>
+                <br><br>
+                <input type="submit" value="افزودن شهر جدید" class="b">
+            </form>
+        </div>
+    </div>
+{%endblock%}

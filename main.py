@@ -51,7 +51,7 @@ def signin():
 @app.route('/admin')
 def admin():
     if Bool:
-        return 'salam admin'
+        return render_template("admin.html")
     else:
         return 'error 403 vorod gheyr ghanoni'
 
