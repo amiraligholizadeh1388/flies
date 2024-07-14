@@ -1,8 +1,11 @@
-from flask import Flask , render_template , request , redirect , url_for
+from flask import Flask , render_template , request , redirect , url_for , flash
 import pandas as pd
 Bool = False
+af = False
+ac = False
+form = [None , None , None , None , None]
 data_flies = pd.read_csv('data_flies.csv')
-cites = pd.read_csv("cities.csv")
+cities = pd.read_csv("cities.csv")
 data = pd.read_csv('data.csv')
 def check_fly(mabda , maghsad , city , flies):
     city = [i for i in city]
@@ -50,11 +53,26 @@ def signin():
     return render_template('signin.html')
 @app.route('/admin')
 def admin():
-    if Bool:
-        return render_template("admin.html")
+    if form[-2] == 'Amirali@1388' and form[-1] == '33259634a':
+        return render_template("admin.html" , af=False , ac=False)
     else:
         return 'error 403 vorod gheyr ghanoni'
 
+@app.route('/adding-fly' , methods=['GET', 'POST'])
+def adding_fly():
+    global data_flies
+    new_data_flies = pd.DataFrame({'fly' : [request.form['fly']]})
+    new_data_flies.to_csv('data_flies.csv' , mode='a' , header=False , index=False)
+    data_flies = pd.read_csv('data_flies.csv')
+    return redirect(url_for('admin' , af=True , ac=False))
+
+@app.route('/adding-city' , methods=['GET', 'POST'])
+def adding_city():
+    global cities
+    new_cities = pd.DataFrame({'city' : [request.form['city']]})
+    new_cities.to_csv('cities.csv' , mode='a' , header=False , index=False)
+    cities = pd.read_csv('cities.csv')
+    return redirect(url_for('admin' , af=False , ac=True))
 @app.route("/account" , methods=['GET' , 'POST'])
 def account():
     global data , form , Bool
@@ -90,7 +108,7 @@ def info():
     form2 = request.form
     form2 = dict(form2)
     form2 = list(form2.values())
-    result = str(check_fly(form2[0], form2[1] , cites['city'] , data_flies['fly']))
+    result = str(check_fly(form2[0], form2[1] , cities['city'] , data_flies['fly']))
     return render_template('info.html' , result=result)
 if __name__ == '__main__':
     app.run()

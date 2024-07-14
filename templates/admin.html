@@ -8,7 +8,7 @@
     <div style="display: flex;">
         <div style="width: 50%;">
             <h2>افزودن پرواز جدید</h2>
-            <form action="http://127.0.0.1:5000/info-admin" method="post">
+            <form action="http://127.0.0.1:5000/adding-fly" method="post">
                 <input type="text" id="5" name="fly" placeholder="پرواز جدید(مثلا city1->city2)" required>
                 <br><br>
                 <input type="submit" value="افزودن پرواز" class="b">
@@ -16,11 +16,21 @@
         </div>
         <div style="width: 50%;">
             <h2>افزودن شهر جدید</h2>
-            <form action="http://127.0.0.1:5000/info-admin" method="post">
-                <input type="text" id="5" name="fly" placeholder="شهر جدید(لطفا مطابق با نقشه اضافه کنید)" required>
+            <form action="http://127.0.0.1:5000/adding-city" method="post">
+                <input type="text" id="5" name="city" placeholder="شهر جدید(لطفا مطابق با نقشه اضافه کنید)" required>
                 <br><br>
                 <input type="submit" value="افزودن شهر جدید" class="b">
             </form>
         </div>
     </div>
+    {%if af%}
+        <script>
+            alert('عملیات شما موفقیت آمیز بود');
+        </script>
+    {%endif%}
+    {%if ac%}
+        <script>
+            alert('عملیات شما موفقیت آمیز بود');
+        </script>
+    {%endif%}
 {%endblock%}
