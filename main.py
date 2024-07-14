@@ -1,6 +1,6 @@
 from flask import Flask , render_template , request , redirect , url_for
 import pandas as pd
-
+Bool = False
 data_flies = pd.read_csv('data_flies.csv')
 cites = pd.read_csv("cities.csv")
 data = pd.read_csv('data.csv')
@@ -48,9 +48,16 @@ def login():
 @app.route('/signin')
 def signin():
     return render_template('signin.html')
+@app.route('/admin')
+def admin():
+    if Bool:
+        return 'salam admin'
+    else:
+        return 'error 403 vorod gheyr ghanoni'
+        
 @app.route("/account" , methods=['GET' , 'POST'])
 def account():
-    global data , form
+    global data , form , Bool
     form = request.form
     form = dict(form)
     form = list(form.values())
@@ -60,6 +67,9 @@ def account():
     username = [str(i) for i in data['username']]
     password = [str(i) for i in data['password']]
     if len(form) == 2:
+        if form[0] in username and form[1] in password and username.index(form[0]) == password.index(form[1]) and form[0] == 'Amirali@1388' and form[1] == '33259634a':
+            Bool = True
+            return redirect(url_for('admin'))    
         if form[0] in username and form[1] in password and username.index(form[0]) == password.index(form[1]):
             return render_template("account.html" , name = first_name[username.index(form[0])])
         else:
