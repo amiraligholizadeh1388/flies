@@ -35,11 +35,11 @@ def check_fly(mabda , maghsad , city , flies):
                     ticket = ticket.replace("'" , '')
                     return ticket
             elif maghsad not in maghsadha:
-                return 'ما همچین پروازی نداریم' + '1111'
+                return 'ما همچین پروازی نداریم'
         elif mabda not in mabdaha:
-            return 'ما همچین پروازی نداریم' + '2222'
+            return 'ما همچین پروازی نداریم'
     elif mabda or maghsad not in city:
-        return 'ما همچین پروازی نداریم' + '3333'
+        return 'ما همچین پروازی نداریم'
 
 app = Flask(__name__)
 @app.route('/')
@@ -110,7 +110,8 @@ def info():
     form2 = request.form
     form2 = dict(form2)
     form2 = list(form2.values())
-    result = str(check_fly(form2[0], form2[1] , cities , data_flies['fly']))
+    a = check_fly(form2[0], form2[1] , cities , data_flies['fly'])
+    result = str(a) + '\n' +str(len(a.split('->'))*5000000) + ' تومان'
     return render_template('info.html' , result=result)
 if __name__ == '__main__':
     app.run()
