@@ -5,7 +5,7 @@ af = False
 ac = False
 form = [None , None , None , None , None]
 data_flies = pd.read_csv('data_flies.csv')
-cities = pd.read_csv("cities.csv")
+cities = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 data = pd.read_csv('data.csv')
 def check_fly(mabda , maghsad , city , flies):
     city = [i for i in city]
@@ -61,18 +61,20 @@ def admin():
 @app.route('/adding-fly' , methods=['GET', 'POST'])
 def adding_fly():
     global data_flies
+    if request.form['fly'] in data_flies['fly']:
+        return render_template('info.html' , result='عملیات نا موفق بود:همچین پروازی وجود دارد')
     new_data_flies = pd.DataFrame({'fly' : [request.form['fly']]})
     new_data_flies.to_csv('data_flies.csv' , mode='a' , header=False , index=False)
     data_flies = pd.read_csv('data_flies.csv')
-    return redirect(url_for('admin' , af=True , ac=False))
+    return render_template('info.html' , result='عملیات موفقیت آمیز')
 
-@app.route('/adding-city' , methods=['GET', 'POST'])
-def adding_city():
-    global cities
-    new_cities = pd.DataFrame({'city' : [request.form['city']]})
-    new_cities.to_csv('cities.csv' , mode='a' , header=False , index=False)
-    cities = pd.read_csv('cities.csv')
-    return redirect(url_for('admin' , af=False , ac=True))
+@app.route('/delete-fly' , methods=['GET', 'POST'])
+def delete_fly():
+    global data_flies
+    data_flies = data_flies[data_flies['fly'] != str(request.form['del-fly'])]
+    data_flies.to_csv('data_flies.csv', mode='w' , index=False)
+    data_flies = pd.read_csv('data_flies.csv')
+    return render_template('info.html' , result='عملیات موفقیت آمیز')
 @app.route("/account" , methods=['GET' , 'POST'])
 def account():
     global data , form , Bool
@@ -108,7 +110,7 @@ def info():
     form2 = request.form
     form2 = dict(form2)
     form2 = list(form2.values())
-    result = str(check_fly(form2[0], form2[1] , cities['city'] , data_flies['fly']))
+    result = str(check_fly(form2[0], form2[1] , cities , data_flies['fly']))
     return render_template('info.html' , result=result)
 if __name__ == '__main__':
     app.run()
