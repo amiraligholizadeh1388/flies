@@ -1,5 +1,6 @@
 from flask import Flask , render_template , request , redirect , url_for , flash
 import pandas as pd
+
 Bool = False
 af = False
 ac = False
@@ -52,11 +53,11 @@ def login():
 def signin():
     return render_template('signin.html')
 @app.route('/admin')
-def admin():
+def admin(e):
     if form[-2] == 'Amirali@1388' and form[-1] == '33259634a':
         return render_template("admin.html" , af=False , ac=False)
     else:
-        return 'error 403 vorod gheyr ghanoni'
+        return render_template('error403.html') , 403
 
 @app.route('/adding-fly' , methods=['GET', 'POST'])
 def adding_fly():
@@ -76,7 +77,7 @@ def delete_fly():
     data_flies = pd.read_csv('data_flies.csv')
     return render_template('info.html' , result='عملیات موفقیت آمیز')
 @app.route("/account" , methods=['GET' , 'POST'])
-def account():
+def account(e):
     global data , form , Bool
     form = request.form
     form = dict(form)
@@ -104,7 +105,7 @@ def account():
         else:
             return redirect(url_for('signin') ,)
     else:
-        return 'error' 
+        return render_template('error403.html') , 403
 @app.route('/info' ,methods=['POST' , 'GET'])
 def info():
     form2 = request.form
@@ -113,6 +114,26 @@ def info():
     a = check_fly(form2[0], form2[1] , cities , data_flies['fly'])
     result = str(a) + '\n' +str(len(a.split('->'))*5000000) + ' تومان'
     return render_template('info.html' , result=result)
+@app.errorhandler(400)
+def error400(e):
+    return render_template('error400.html') , 400
+
+@app.errorhandler(401)
+def error401(e):
+    return render_template('error401.html') , 401
+
+@app.errorhandler(403)
+def error403(e):
+    return render_template('error403.html') , 403
+
+@app.errorhandler(404)
+def error404(e):
+    return render_template('error404.html') , 404
+
+@app.errorhandler(500)
+def error500(e):
+    return render_template('error500.html') , 500
+
 if __name__ == '__main__':
     app.run()
 

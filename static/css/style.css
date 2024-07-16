@@ -181,3 +181,11 @@ input.b{
   background-color: rgb(246, 142, 142);
   color: black;
 }
+a.error-button{
+  text-align: center;
+  background-color: rgb(0, 138, 255);
+  border-radius: 20px;
+  font-family: lalezar;
+  color: white;
+  font-size: 50px;
+}
