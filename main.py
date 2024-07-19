@@ -53,7 +53,7 @@ def login():
 def signin():
     return render_template('signin.html')
 @app.route('/admin')
-def admin(e):
+def admin():
     if form[-2] == 'Amirali@1388' and form[-1] == '33259634a':
         return render_template("admin.html" , af=False , ac=False)
     else:
@@ -76,8 +76,8 @@ def delete_fly():
     data_flies.to_csv('data_flies.csv', mode='w' , index=False)
     data_flies = pd.read_csv('data_flies.csv')
     return render_template('info.html' , result='عملیات موفقیت آمیز')
-@app.route("/account" , methods=['GET' , 'POST'])
-def account(e):
+@app.route("/account/" , methods=['GET' , 'POST'])
+def account():
     global data , form , Bool
     form = request.form
     form = dict(form)
@@ -135,5 +135,5 @@ def error500(e):
     return render_template('error500.html') , 500
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
